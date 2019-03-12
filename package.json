@@ -1,6 +1,6 @@
 {
 	"name": "imba-node-watch",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
@@ -10,5 +10,8 @@
 	"license": "MIT",
 	"bin": {
 		"imbaw": "bin/imbaw"
+	},
+	"dependencies": {
+		"gaze": "^1.1.3"
 	}
 }
