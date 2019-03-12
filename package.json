@@ -1,6 +1,6 @@
 {
 	"name": "imba-node-watch",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
@@ -9,6 +9,6 @@
 	"author": "Fedor Leschinsky",
 	"license": "MIT",
 	"bin": {
-		"imbaw": "imbaw"
+		"imbaw": "bin/imbaw"
 	}
 }
