@@ -1,26 +1,29 @@
 #!/usr/bin/env node
 
 const process = require('process');
-const exec = require('child_process').exec;
+const spawn = require('child_process').spawn;
 const Gaze = require('gaze').Gaze;
 
 var imba_watch = new Gaze('**/*.imba');
 
 var filename = process.argv[2];
-var child_process
-var started = 0
+var child_process;
+var started = 0;
 
-const execute = function() {
-	if (Date.now() - started > 500) {
-		console.log('\x1b[32m----------------------------\x1b[37m');
-		running = true
-		started = Date.now()
-		child_process = exec("imba " + filename, { env: process.env }, (err) => {console.log('\x1b[32mDone in ' + (Date.now() - started) / 1000 + 's\x1b[37m')});
-		child_process.stdout.pipe(process.stdout);
-		child_process.stderr.pipe(process.stderr);
-	}
-};
+function start() {
+	console.log('\x1b[32m----------------------------\x1b[37m');
+	started = Date.now();
+	child_process = spawn('node', ['node_modules/imba/bin/imba',filename]);
+    child_process.stdout.pipe(process.stdout);
+	child_process.stderr.pipe(process.stderr);
+
+    child_process.on('exit', function (code) {
+		child_process = null;
+		if (code === null) {setTimeout(start, 500)};
+		console.log('\x1b[32mDone in ' + (Date.now() - started) / 1000 + 's\x1b[37m');
+    });
+}
 
 process.title = 'imbaw';
-imba_watch.on('ready', function(watcher) {execute()});
-imba_watch.on('all', function(event, filepath) {execute()});
+imba_watch.on('ready', () => {start()});
+imba_watch.on('all', () => {if(child_process) {child_process.kill()} else {start()}});
