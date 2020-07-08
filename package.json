@@ -1,6 +1,6 @@
 {
 	"name": "imba-node-watch",
-	"version": "0.0.20",
+	"version": "0.0.21",
 	"main": "bin/imbaw.js",
 	"repository": {
 		"type": "git",
