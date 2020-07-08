@@ -12,18 +12,17 @@ function start() {
 	console.log('\x1b[32m----------------------------\x1b[37m');
 	started = Date.now();
 	child_process = spawn('node', ['node_modules/imba/bin/imba',filename]);
-    child_process.stdout.pipe(process.stdout);
+	child_process.stdout.pipe(process.stdout);
 	child_process.stderr.pipe(process.stderr);
 
-    child_process.on('exit', function (code) {
-		child_process = null;
-		if (code === null) {setTimeout(start, 500)};
+	child_process.on('exit', function (code) {
 		console.log('\x1b[32mDone in ' + (Date.now() - started) / 1000 + 's\x1b[37m');
-    });
+		start();
+	});
 }
 
 process.title = 'imbaw';
 
 chokidar.watch('**/*.imba')
 	.on('ready', () => {start()})
-	.on('all', () => {if(child_process) {child_process.kill()} else {start()}});
+	.on('change', () => {if(child_process) {child_process.kill()} else {start()}});
