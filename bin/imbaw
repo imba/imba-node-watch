@@ -2,9 +2,7 @@
 
 const process = require('process');
 const spawn = require('child_process').spawn;
-const Gaze = require('gaze').Gaze;
-
-var imba_watch = new Gaze('**/*.imba');
+const chokidar = require('chokidar');
 
 var filename = process.argv[2];
 var child_process;
@@ -25,5 +23,7 @@ function start() {
 }
 
 process.title = 'imbaw';
-imba_watch.on('ready', () => {start()});
-imba_watch.on('all', () => {if(child_process) {child_process.kill()} else {start()}});
+
+chokidar.watch('**/*.imba')
+	.on('ready', () => {start()})
+	.on('all', () => {if(child_process) {child_process.kill()} else {start()}});
