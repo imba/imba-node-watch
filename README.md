@@ -1,5 +1,5 @@
 # imba-node-watch
-This tiny CLI tool watches for changes in `*.imba` files and restarts the given file as node application. It is needed when you develop server-side application in Imba.
+This tiny CLI tool watches for changes in `*.imba` files and restarts the given imba file as node application. It is needed when you develop server-side application in Imba.
 Uses [chokidar](https://github.com/paulmillr/chokidar) under the hood.
 
 Doesn't create compiled js files that prevents mess with temp output.
