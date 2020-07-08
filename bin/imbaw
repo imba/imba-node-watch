@@ -7,9 +7,10 @@ const chokidar = require('chokidar');
 var filename = process.argv[2];
 var child_process;
 var started = 0;
+const log = console.log.bind(console);
 
 function start() {
-	console.log('\x1b[32m----------------------------\x1b[37m');
+	log('\x1b[32m----------------------------\x1b[37m');
 	started = Date.now();
 	child_process = spawn('node', ['node_modules/imba/bin/imba',filename]);
 	child_process.stdout.pipe(process.stdout);
@@ -17,7 +18,7 @@ function start() {
 
 	child_process.on('exit', function (code) {
 		child_process = null;
-		console.log('\x1b[32mDone in ' + (Date.now() - started) / 1000 + 's\x1b[37m');
+		setTimeout(() => log('\x1b[32mDone in ' + (Date.now() - started) / 1000 + 's\x1b[37m'), 10);
 		if (code === null) start();
 	});
 }
